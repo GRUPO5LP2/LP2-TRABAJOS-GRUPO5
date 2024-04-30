@@ -1,0 +1,17 @@
+// Invocación implícita del constructor
+ClaseEjemplo objetoUno;
+// Error: invocación ilegal del constructor
+ClaseEjemplo::ClaseEjemplo();
+// Error: invocación ilegal del constructor
+ClaseEjemplo objetoDos = ClaseEjemplo::ClaseEjemplo(6, 'o');
+// Invocación legal del constructor
+ClaseEjemplo objetoTres = ClaseEjemplo(9, 'i');
+// Variación sintáctica del anterior
+ClaseEjemplo objetoCuatro(3, 'h');
+Si queremos objetos dinámicos se debe de poder crearlos mediant el operador new y punteros a
+objetos del mismo tipo.
+
+{
+ClaseEjemplo *ptrObjetoUno = new ClaseEjemplo;
+ClaseEjemplo *ptrObjetoDos = new ClaseEjemplo(4,'x');
+}

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <algorithm> // Para std::sort
+#include <algorithm> 
 
 using namespace std;
 
@@ -26,12 +26,12 @@ public:
 class Grupo {
 public:
   int cantidad;
-  Alumno alumnos[100]; // Se define un arreglo de alumnos con tamaño máximo 100
+  Alumno alumnos[100]; 
 
   Grupo(int _cantidad) : cantidad(_cantidad) {}
 
   void agregar_alumno(string nombre, int edad, float promedio) {
-    if (alumnos[cantidad - 1].nombre == "") { // Verifica si hay espacio disponible
+    if (alumnos[cantidad - 1].nombre == "") { 
       alumnos[cantidad - 1] = Alumno(nombre, edad, promedio);
       cout << "Alumno " << nombre << " agregado al grupo." << endl;
       cantidad++;
@@ -41,7 +41,7 @@ public:
   }
 
   void ordena_por_promedios() {
-    sort(alumnos, alumnos + cantidad - 1); // Ordena el arreglo de alumnos
+    sort(alumnos, alumnos + cantidad - 1); 
   }
 
   void promedio_grupo() {

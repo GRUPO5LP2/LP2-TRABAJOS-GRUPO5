@@ -1,87 +1,110 @@
 #include <iostream>
-#include <algorithm> 
+#include <string>
 
 using namespace std;
 
 class Alumno {
+private:
+    string nombre;
+    int edad;
+    float promedio;
+    
 public:
-  string nombre;
-  int edad;
-  float promedio;
+    Alumno(string nombre, int edad, float promedio) : nombre(nombre), edad(edad), promedio(promedio) {}
 
-  Alumno(string _nombre, int _edad, float _promedio) : nombre(_nombre), edad(_edad), promedio(_promedio) {}
+    string getNombre() const {
+        return nombre;
+    }
 
-  bool operator<(const Alumno& otro) const {
-    return promedio < otro.promedio;
-  }
+    int getEdad() const {
+        return edad;
+    }
 
-  friend ostream& operator<<(ostream& os, const Alumno& alumno) {
-    os << "Nombre: " << alumno.nombre << endl;
-    os << "Edad: " << alumno.edad << endl;
-    os << "Promedio: " << alumno.promedio << endl;
-    return os;
-  }
+    float getPromedio() const {
+        return promedio;
+    }
+
+    bool operator<(const Alumno &otro) const {
+        return promedio < otro.promedio;
+    }
+
+    void imprimir() const {
+        cout << "Nombre: " << nombre << endl;
+        cout << "Edad: " << edad << endl;
+        cout << "Promedio: " << promedio << endl;
+    }
 };
 
-class Grupo {
+class Grupo{
+private:
+    int cantidad;
+    Alumno *alumnos;
+    int contador;
+    
 public:
-  int cantidad;
-  Alumno alumnos[100]; 
+    Grupo(int cantidad) : cantidad(cantidad), alumnos(new Alumno[cantidad]), contador(0) {}
 
-  Grupo(int _cantidad) : cantidad(_cantidad) {}
-
-  void agregar_alumno(string nombre, int edad, float promedio) {
-    if (alumnos[cantidad - 1].nombre == "") { 
-      alumnos[cantidad - 1] = Alumno(nombre, edad, promedio);
-      cout << "Alumno " << nombre << " agregado al grupo." << endl;
-      cantidad++;
-    } else {
-      cout << "El grupo está lleno, no se pudo agregar al alumno " << nombre << "." << endl;
+    ~Grupo() {
+        delete[] alumnos;
     }
-  }
 
-  void ordena_por_promedios() {
-    sort(alumnos, alumnos + cantidad - 1); 
-  }
-
-  void promedio_grupo() {
-    float suma = 0;
-    for (int i = 0; i < cantidad - 1; i++) {
-      suma += alumnos[i].promedio;
+    void agregarAlumno(string nombre, int edad, float promedio) {
+        if (contador < cantidad) {
+            alumnos[contador++] = Alumno(nombre, edad, promedio);
+            cout << "Alumno " << nombre << " agregado al grupo." << endl;
+        } else {
+            cout << "El grupo está lleno, no se pudo agregar al alumno " << nombre << "." << endl;
+        }
     }
-    cout << "El promedio de los promedios de los alumnos es: " << suma / cantidad << endl;
-  }
 
-  void mayor_promedio() {
-    float mayor = 0;
-    for (int i = 0; i < cantidad - 1; i++) {
-      if (alumnos[i].promedio > mayor) {
-        mayor = alumnos[i].promedio;
-      }
+    void ordenarPorPromedios() {
+        for (int i = 0; i < contador - 1; ++i) {
+            for (int j = 0; j < contador - i - 1; ++j) {
+                if (alumnos[j + 1].getPromedio() < alumnos[j].getPromedio()) {
+                    swap(alumnos[j], alumnos[j + 1]);
+                }
+            }
+        }
     }
-    cout << "El mayor promedio de todos los promedios es: " << mayor << endl;
-  }
 
-  friend ostream& operator<<(ostream& os, const Grupo& grupo) {
-    os << "Hay " << grupo.cantidad - 1 << " alumnos, estos son:" << endl;
-    for (int i = 0; i < grupo.cantidad - 1; i++) {
-      os << alumnos[i];
+    void imprimirGrupo() const {
+        cout << "Hay " << contador << " alumnos, estos son:" << endl;
+        for (int i = 0; i < contador; ++i) {
+            alumnos[i].imprimir();
+        }
     }
-    return os;
-  }
+
+    void promedioGrupo() const {
+        float suma = 0;
+        for (int i = 0; i < contador; ++i) {
+            suma += alumnos[i].getPromedio();
+        }
+        cout << "El promedio de los promedios de los alumnos es: " << suma / contador << endl;
+    }
+
+    void mayorPromedio() const {
+        float maxPromedio = 0;
+        for (int i = 0; i < contador; ++i) {
+            if (alumnos[i].getPromedio() > maxPromedio) {
+                maxPromedio = alumnos[i].getPromedio();
+            }
+        }
+        cout << "El mayor promedio de todos los promedios es: " << maxPromedio << endl;
+    }
 };
 
 int main() {
-  Grupo grupo(5);
-  grupo.agregar_alumno("Mauricio", 15, 15.5);
-  grupo.agregar_alumno("Ivan", 25, 16);
-  grupo.agregar_alumno("Oscar", 18, 0.5);
-  grupo.agregar_alumno("Renzo", 19, 18);
-  grupo.agregar_alumno("Sebastian", 19, 11.5);
-  grupo.agregar_alumno("Paolo", 19, 20);
-  cout << grupo;
-  grupo.promedio_grupo();
-  grupo.mayor_promedio();
+    Grupo grupo(5);
+    grupo.agregarAlumno("Mauricio", 15, 15.5);
+    grupo.agregarAlumno("Ivan", 25, 16);
+    grupo.agregarAlumno("Oscar", 18, 0.5);
+    grupo.agregarAlumno("Renzo", 19, 18);
+    grupo.agregarAlumno("Sebastian", 19, 11.5);
+    grupo.agregarAlumno("Paolo", 19, 20);
+    grupo.ordenarPorPromedios();
+    grupo.imprimirGrupo();
+    grupo.promedioGrupo();
+    grupo.mayorPromedio();
 
-  return 0;
+    return 0;
 }

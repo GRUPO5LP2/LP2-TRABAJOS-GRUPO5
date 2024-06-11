@@ -5,7 +5,9 @@ using namespace std;
 class Tareas{
     public:
         string nombre, fecha_inicio, fecha_fin;
-        Tareas(string n, string fi, string ff){
+        int codigo;
+        Tareas(int cod,string n, string fi, string ff){
+            codigo = cod;
             nombre = n;
             fecha_inicio = fi;
             fecha_fin = ff;
@@ -15,34 +17,34 @@ class Tareas{
 
 class TareaSimple : public Tareas{
     public:
-        TareaSimple(string n, string fi, string ff) : Tareas(n, fi, ff){}
+        TareaSimple(int cod, string n, string fi, string ff) : Tareas(cod, n, fi, ff){}
         void mostrarDetalles() override{
-            cout << "Tarea simple: " << nombre << " Fecha inicio: " << fecha_inicio << " Fecha fin: " << fecha_fin << endl;
+            cout << "Codigo: " << codigo << " Tarea simple: " << nombre << " Fecha inicio: " << fecha_inicio << " Fecha fin: " << fecha_fin << endl;
         }
 };
 
 class TareaCompuesta : public Tareas{
     public:
-        TareaCompuesta(string n, string fi, string ff) : Tareas(n, fi, ff){}
+        TareaCompuesta(int cod, string n, string fi, string ff) : Tareas(cod, n, fi, ff){}
         void mostrarDetalles() override{
-            cout << "Tarea compuesta: " << nombre << " Fecha inicio: " << fecha_inicio << " Fecha fin: " << fecha_fin << endl;
+            cout << "Codigo: " << codigo << " Tarea compuesta: " << nombre << " Fecha inicio: " << fecha_inicio << " Fecha fin: " << fecha_fin << endl;
         }
 };
 
 class Hito : public Tareas{
     public:
-        Hito(string n, string fi, string ff) : Tareas(n, fi, ff){}
+        Hito(int cod, string n, string fi, string ff) : Tareas(cod, n, fi, ff){}
         void mostrarDetalles() override{
-            cout << "Hito: " << nombre << " Fecha inicio: " << fecha_inicio << " Fecha fin: " << fecha_fin << endl;
+            cout << "Codigo: " << codigo << " Hito: " << nombre << " Fecha inicio: " << fecha_inicio << " Fecha fin: " << fecha_fin << endl;
         }
 };
 
 int main(){
     const int longitud_array = 3;
     Tareas* tareas[longitud_array];
-    tareas[0] = new TareaSimple("Tarea 1", "01/01/2021", "05/01/2024");
-    tareas[1] = new TareaCompuesta("TareaCompuesta 1", "01/01/2021", "05/01/2024");
-    tareas[2] = new Hito("Hito 1", "01/01/2021", "05/01/2024");
+    tareas[0] = new TareaSimple(1, "Tarea 1", "01/01/2021", "05/01/2024");
+    tareas[1] = new TareaCompuesta(2, "TareaCompuesta 1", "01/01/2021", "05/01/2024");
+    tareas[2] = new Hito(3, "Hito 1", "01/01/2021", "05/01/2024");
     tareas[0]->mostrarDetalles();
     tareas[1]->mostrarDetalles();
     tareas[2]->mostrarDetalles();

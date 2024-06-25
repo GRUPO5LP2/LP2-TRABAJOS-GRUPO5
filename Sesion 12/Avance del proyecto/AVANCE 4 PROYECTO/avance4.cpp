@@ -123,8 +123,7 @@ int menu() {
     cout << "6. Eliminar Tarea por Nombre" << endl;
     cout << "7. Salir" << endl;
     cout << "Ingrese su opción: ";
-    int opcion;
-    cin >> opcion;
+    int opcion = obtenerEntero("Ingrese su opción: ");
     return opcion;
 }
 
